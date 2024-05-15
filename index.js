@@ -1,17 +1,21 @@
-function partitionLabels(s) {
-  const last = new Array(26);
-  for (let i = 0; i < s.length; i++) {
-    last[s.charCodeAt(i) - "a".charCodeAt(0)] = i;
+function addTwoNumbers(l1, l2) {
+  const dummy = new ListNode(0);
+  let p = l1,
+    q = l2,
+    curr = dummy;
+  let carry = 0;
+  while (p !== null || q !== null) {
+    const x = p !== null ? p.val : 0;
+    const y = q !== null ? q.val : 0;
+    const sum = x + y + carry;
+    carry = Math.floor(sum / 10);
+    curr.next = new ListNode(sum % 10);
+    curr = curr.next;
+    if (p !== null) p = p.next;
+    if (q !== null) q = q.next;
   }
-  let anchor = 0;
-  let j = 0;
-  const result = [];
-  for (let i = 0; i < s.length; i++) {
-    j = Math.max(j, last[s.charCodeAt(i) - "a".charCodeAt(0)]);
-    if (i === j) {
-      result.push(i - anchor + 1);
-      anchor = i + 1;
-    }
+  if (carry > 0) {
+    curr.next = new ListNode(carry);
   }
-  return result;
+  return dummy.next;
 }
